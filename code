@@ -11,7 +11,7 @@
 using namespace std;
 void rules();
 void close();
-void main_menu();
+int main_menu();
 class Node
 {
 	public:
@@ -20,10 +20,11 @@ class Node
     string address;
    char sex;
     int ph_no;
-    int cpu;
+    string cpu;
     int credits;
     long max_range;
  int item_name;
+ string product_name;
 	Node *prst;
 	Node *next;
 	Node *LINK;
@@ -33,11 +34,12 @@ Node *first_cust=new Node();
 void casino(Node *head);
 void details(Node *head);
 void book(Node **second);
+void check(Node *head);
 void display_buyrecord(Node *head);
 
 
 //customerlogin
-void cust_log(Node * head,Node *second)
+void cust_log(Node *head,Node *second)
 {
 int ch;
     while (ch != 5)
@@ -53,7 +55,7 @@ int ch;
   cout<<"                                *  Press 5 To  Exit            *"<<endl;
   cout<<"                                ********************************"<<endl;
   cout<<"                                ********************************"<<endl;
-  cout<<" enter the choice";
+  cout<<"enter the choice";
      cin>>ch;
        switch(ch)
        {
@@ -61,7 +63,7 @@ int ch;
         system("cls");
       book(&second);
       first_cust->LINK=second;
-     // check(second);
+     check(second);
         system("cls");
         break;
        case 2:
@@ -78,10 +80,13 @@ int ch;
         case 4:
             system("cls");
             details(head);
+            getch();
+            system("cls");
             break;
 
         case 5:
             close();
+            main_menu();
             break;
 
        default:
@@ -95,22 +100,24 @@ void close()
     system("cls");
             cout<<"Thank you for Visiting."<<endl;
             cout<<" Visit again :)";
+            getch();
+            system("cls");
 }
 void registration(Node**first_cust)//node insert
 {
     //preparing of new node
      Node *temp=new Node();
 
-    cout<<"Enter the name"<<"\n";
+    cout<<"Enter the name : ";
      fflush(stdin);
         cin>>temp->name;
-        cout<<"enter your gender";
+        cout<<"enter your gender : ";
          fflush(stdin);
         cin>>temp->sex;
-        cout<<"Enter the address"<<"\n";
+        cout<<"Enter the address : ";
          fflush(stdin);
         cin>>temp->address;
-        cout<<"Enter the phone number"<<"\n";
+        cout<<"Enter the phone number : ";
          fflush(stdin);
         cin>>temp->ph_no;
         temp->credits=100;
@@ -127,59 +134,138 @@ void registration(Node**first_cust)//node insert
 }};
 void check(Node *head)
 {
-    int ch;
-    stack<int> sk;
+    int ch,j;
+    int flag=0;
     if(head->item_name==1)
     {
-            if(head->cpu==1)
-            {
-                cout<<head->cpu;
-                cout<<endl<<"1.i3 7th with touch and HDD";
-                cout<<endl<<"2.i3 10th with SSD";
-                cout<<endl<<"3.i5 8th gen with HDD";
-                cout<<endl<<"   searching for best........";
-                sk.push(1);
-                sk.push(2);
-                sk.push(3);
-                 int m = sk.top(); //initialization
-                 int a;
-                 while (!sk.empty())
-               {
-                  a = sk.top();
-                  if (m < a)
-                  m = a;
-                  sk.pop();
-                }
-                if(m>=3)
-                {
-                    head->max_range=40000;
-                    cout<<"pay now";
-                }
-
-            }
-            else
-            cout<<"there is shortage of amd-cpus try intel";
-    }
+          const char separator = ' ';
+    const int aWidth = 14;
+    const int bWidth = 9;
+        cout<<"\n\t\t+-----------------+----------------------------------------+";
+        cout<<"\n\t\t|              laptops avilable                            |";
+        cout<<"\n\t\t+-----------------+----------------------------------------+";
+        cout<<"\n\t\t| 1. Lenovo       |"<<setw(aWidth) << setfill(separator)<<" basic amount 25000" << setw(bWidth) << setfill(separator)<<"|";
+        cout<<"\n\t\t| 2.   Hp         |"<<setw(aWidth) << setfill(separator)<<" basic amount 30000" << setw(bWidth) << setfill(separator)<< "|";
+        cout<<"\n\t\t| 3.  Acer        |"<<setw(aWidth) << setfill(separator)<<" basic amount 20000" << setw(bWidth) << setfill(separator)<< "|";
+        cout<<"\n\t\t| 4.  MSI         |"<<setw(aWidth) << setfill(separator)<<" basic amount 15000" << setw(bWidth) << setfill(separator)<< "|";
+        cout<<"\n\t\t| 5.  DELL        |"<<setw(aWidth) << setfill(separator)<<" basic amount 35000" << setw(bWidth) << setfill(separator)<< "|";
+        cout<<"\n\t\t+-----------------+----------------------------------------+";
+         cout<<endl<<"enter your choice";
+        cin>>ch;
+         system("cls");
+         switch (ch){
+        case 1:
+        head->product_name="lenovo";
+        head->max_range=25000;
+        break;
+        case 2:
+        head->product_name="hp";
+        head->max_range=30000;
+        break;
+        case 3:
+        head->product_name="acer";
+        head->max_range=20000;
+        break;
+        case 4:
+        head->product_name="MSI";
+        head->max_range=15000;
+        break;
+        case 5:
+        head->product_name="dell";
+        head->max_range=35000;
+        break;
+        default:
+        cout<<"wrong choice";
+        break;
+         }
+         //for cpu's
+           cout<<endl<<endl;
+          cout<<"processor you prefer cpu and storage type"<<"\n";
+          cout<<" 1:Intel press intel i5 with ssd->RS15000+RS500"<<"\n";
+          cout<<" 2:Intel press intel i5 with hdd->RS15000"<<"\n";
+          cout<<" 3:Amd   press ryzen 5 with ssd->RS10000+RS500"<<"\n";
+          cout<<" 4:Amd   press ryzen 5 with hdd->RS10000"<<"\n";
+          cin>>j;
+          switch (j){
+        case 1:
+         head->cpu="Intel press intel i5 11th gen/ssd " ;
+            head->max_range+=15500;
+        break;
+        case 2:
+        head->cpu="Intel press intel i5 11th gen/hdd" ;
+            head->max_range+=15000;
+        break;
+        case 3:
+         head->cpu="Amd   press ryzen 5/ssd" ;
+    head->max_range+=10500;
+        break;
+        case 4:
+        head->cpu="Amd   press ryzen 5/hdd" ;
+    head->max_range+=10000;
+        break;
+          default:
+        cout<<"wrong choice";
+        flag++;
+        break;
+        }}
+        //for mackbook
      else
-             cout<<"sorry no phones";
+     {
+         const char separator = ' ';
+    const int aWidth = 14;
+    const int bWidth = 9;
+        cout<<"\n\t\t+-----------------+----------------------------------------------+";
+        cout<<"\n\t\t|              laptops avilable                                  |";
+        cout<<"\n\t\t+-----------------+----------------------------------------------+";
+        cout<<"\n\t\t| 1. air m1       |"<<setw(aWidth) << setfill(separator)<<"  amount 87000" << setw(bWidth) << setfill(separator)<<"|";
+        cout<<"\n\t\t| 2.  air         |"<<setw(aWidth) << setfill(separator)<<"  amount 92000" << setw(bWidth) << setfill(separator)<< "|";
+        cout<<"\n\t\t| 3.  pro15 m1    |"<<setw(aWidth) << setfill(separator)<<"  amount 120000" << setw(bWidth) << setfill(separator)<< "|";
+        cout<<"\n\t\t| 4.  pro16 m1    |"<<setw(aWidth) << setfill(separator)<<"  amount 100000" << setw(bWidth) << setfill(separator)<< "|";
+        cout<<"\n\t\t+-----------------+----------------------------------------------+";
+        cout<<"enter the choices :";
+        cin>>j;
+        system("cls");
+            switch (j){
+        case 1:
+            cout<<"proceeding";
+          head->product_name="mackbook air";
+             head->max_range=87000;
 
-}
+        break;
+        case 2:
+            cout<<"proceeding";
+         head->product_name="mackbook air M1";
+             head->max_range=92000;
+        break;
+        case 3:
+            cout<<"proceeding";
+          head->product_name="mackbook pro15 M1";
+             head->max_range=120000;
+        break;
+        case 4:
+            cout<<"proceeding";
+         head->product_name="mackbook pro16 M1";
+             head->max_range=100000;
+        break;
+          default:
+        cout<<"wrong choice";
+          flag++;
+        break;
 
+
+         }
+         if (flag!=0)
+            cout<<"your order have been placed";
+}}
+//for booking
 void book(Node**second)
 {
     //preparing of new node
      Node *temp=new Node();
 
-    cout<<"Enter the item name eg:laptop press1 and mobile press 2"<<"\n";
+    cout<<"Enter the item name eg:laptop press1 and FOR MACBOOK PRESS 2"<<"\n";
      fflush(stdin);
         cin>>temp->item_name;
-        cout<<temp->item_name;
-        cout<<"processor you prefer intel or amd"<<"\n";
-        cout<<"Intel press 1:"<<"\n";
-        cout<<"Amd   press 2:"<<"\n";
-         fflush(stdin);
-        cin>>temp->cpu;
-
         if(*second==NULL)
     {
         *second =temp;
@@ -196,8 +282,9 @@ void display_buyrecord(Node *head)
     int i=1;
     while(head->prst!=NULL)
     {
-        cout<<endl<<"the name of "<<i++<<" product is:"<<" = "<<head->item_name<<"\n";
-        cout<<endl<<"the name of "<<i++<<" price paid is:"<<" = "<<head->max_range<<"\n";
+        cout<<endl<<"the name of "<<i++<<" product is:"<<" = "<<head->product_name<<"\n";
+        cout<<endl<<"AND cpu/STORAGE is:"<<" = "<<head->cpu<<"\n";
+        cout<<endl<<" price paid is:"<<" = "<<head->max_range<<"\n";
 
         head=head->prst;
     }
@@ -213,41 +300,16 @@ void details(Node *head)
         ptr=head->LINK;
         while(ptr->prst!=NULL)
         {
-            cout<<endl<<"the item name is :"<<ptr->item_name;
+            cout<<endl<<"the product is :"<<ptr->product_name;
             cout<<endl<<"the price paid is :"<<ptr->max_range;
+            cout<<endl<<"the customer credits are :"<<ptr->credits;
             ptr=ptr->prst;
         }
 
 
 }
 
-/*
-Node *add_product(int n)
-{
-  Node *rtt=NULL;
-    Node *tmp=NULL;
-     Node*ptr;
-    for(int i=0;i<n;i++)
-    {
-        tmp=new Node();
 
-        cout<<"Enter the item name"<<"\n";
-        cin>>tmp->item_name;
-        cout<<"Enter the quantity"<<"\n";
-        cin>>tmp->quantity;
-        tmp->prst=NULL;
-            if(rtt==NULL)
-                rtt=tmp;
-            else
-            {
-                ptr=rtt;
-                while(ptr!=NULL)
-                ptr = ptr->prst;
-                ptr->prst=tmp;
-            }
-    }
-    return rtt;
-}*/
 void alr_cus(Node *head,int phone)
 {
     int i=1;
@@ -258,14 +320,20 @@ while(head->next!=NULL)
         if(head->ph_no==phone)
      {
              flag=0;
-             Node *second=new  Node();
-        cout<<"the name of customer "<<i<<" is:"<<" = "<<head->name<<"\n";
-        cout<<"the gender of customer "<<i<<" is:"<<" = "<<head->sex<<"\n";
-        cout<<"the address of customer "<<i<<" is:"<<" = "<<head->address<<"\n";
-        cout<<"the phone number of customer "<<i<<" is:"<<" = "<<head->ph_no<<"\n";
+        Node *second=new  Node();
+          const char separator = ' ';
+    const int aWidth = 14;
+    const int bWidth = 9;
+        cout<<"\n\t\t+-----------------+----------------------+";
+        cout<<"\n\t\t|            Customer Details            |";
+        cout<<"\n\t\t+-----------------+----------------------+";
+        cout<<"\n\t\t|   First Name    |"<<setw(aWidth) << setfill(separator)<<head->name << setw(bWidth) << setfill(separator)<<"|";
+        cout<<"\n\t\t|  Mobile Number  |"<<setw(aWidth) << setfill(separator)<<head->ph_no << setw(bWidth) << setfill(separator)<< "|";
+        cout<<"\n\t\t|     Address     |"<<setw(aWidth) << setfill(separator)<<head->address << setw(bWidth) << setfill(separator)<< "|";
+        cout<<"\n\t\t|      Gender     |"<<setw(aWidth) << setfill(separator)<<head->sex << setw(bWidth) << setfill(separator)<< "|";
+        cout<<"\n\t\t+-----------------+----------------------+";
         getch();
         system("cls");
-
         cust_log(head,second);
    }
     else {
@@ -284,15 +352,23 @@ void display(Node *head)
     int i=1;
     while(head->next!=NULL)
     {
-        cout<<"the name of customer "<<i<<" is:"<<" = "<<head->name<<"\n";
-        cout<<"the gender of customer "<<i<<" is:"<<" = "<<head->sex<<"\n";
-        cout<<"the address of customer "<<i<<" is:"<<" = "<<head->address<<"\n";
-        cout<<"the phone number of customer "<<i<<" is:"<<" = "<<head->ph_no<<"\n";
+       const char separator = ' ';
+    const int aWidth = 14;
+    const int bWidth = 9;
+        cout<<"\n\t\t+-----------------+----------------------+";
+        cout<<"\n\t\t|            Customer Details            |";
+        cout<<"\n\t\t+-----------------+----------------------+";
+        cout<<"\n\t\t|   First Name    |"<<setw(aWidth) << setfill(separator)<<head->name << setw(bWidth) << setfill(separator)<<"|";
+        cout<<"\n\t\t|  Mobile Number  |"<<setw(aWidth) << setfill(separator)<<head->ph_no << setw(bWidth) << setfill(separator)<< "|";
+        cout<<"\n\t\t|     Address     |"<<setw(aWidth) << setfill(separator)<<head->address << setw(bWidth) << setfill(separator)<< "|";
+        cout<<"\n\t\t|      Gender     |"<<setw(aWidth) << setfill(separator)<<head->sex << setw(bWidth) << setfill(separator)<< "|";
+        cout<<"\n\t\t+-----------------+----------------------+";
+        getch();
         head=head->next;
         i++;
     }
 }
-void main_menu()
+int main_menu()
 {
     int choices;
     int phno;
@@ -341,6 +417,11 @@ case 3:
             system("cls");
         }
        break;
+case 4:
+    system("cls");
+     cout<<"Thank you for Visiting."<<endl;
+            cout<<" Visit again :)";
+    return 0;
    default:
     cout<<"thanks:";
      system("cls");
@@ -385,7 +466,7 @@ void casino(Node *head)
         cout << "\n\nYour current balance is Rs." << amount << "\n";
         do
         {
-            cout << "\n How many credits you want to buy";
+            cout << "\n How many credits you want to use";
             cin >> bettingAmount;
             if (bettingAmount > amount)
                 cout << "\nYour betting credits is more than your current credits\n"
@@ -404,12 +485,14 @@ void casino(Node *head)
         {
             cout<<"you have been short listed for upcoming give away";
              amount = amount + bettingAmount * 10;
-             cout<<"your new credits are"<<amount<<"\n";
+             cout<<"your new credits are";
              }
         else
         {
             cout << "\nBad Luck this time !! You lost " << bettingAmount<<" credits" << "\n";
             amount = amount - bettingAmount;
+            head->credits=amount;
+
         }
         cout << "\nThe winning number was : " << dice << "\n";
         cout << "\nYou have  " << amount << "\n";
@@ -425,6 +508,7 @@ void casino(Node *head)
 
 while (choice == 'Y' || choice == 'y');
     cout << "\nThanks for playing game. Your new credits are  " << amount;
+    head->credits=amount;
     system("cls");
 }
 
