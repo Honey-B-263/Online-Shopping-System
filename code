@@ -1,0 +1,450 @@
+#include <iostream>
+#include <fstream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <cstring>
+#include <ctime>
+#include <stack>
+#include <iomanip>
+#include <conio.h>
+#include <dos.h>
+using namespace std;
+void rules();
+void close();
+void main_menu();
+class Node
+{
+	public:
+	string name;
+	int a[10];
+    string address;
+   char sex;
+    int ph_no;
+    int cpu;
+    int credits;
+    long max_range;
+ int item_name;
+	Node *prst;
+	Node *next;
+	Node *LINK;
+};
+
+Node *first_cust=new Node();
+void casino(Node *head);
+void details(Node *head);
+void book(Node **second);
+void display_buyrecord(Node *head);
+
+
+//customerlogin
+void cust_log(Node * head,Node *second)
+{
+int ch;
+    while (ch != 5)
+         {
+
+  cout<<"                                ********************************"<<endl;
+  cout<<"                                ***********  welcome   *********"<<endl;
+  cout<<"                                ********************************"<<endl;
+  cout<<"                                *  Press 1 for book new item   *"<<endl;
+  cout<<"                                *  Press 2 orders              *"<<endl;
+  cout<<"                                *  Press 3 play and earn       *"<<endl;
+  cout<<"                                *  Press 4 details             *"<<endl;
+  cout<<"                                *  Press 5 To  Exit            *"<<endl;
+  cout<<"                                ********************************"<<endl;
+  cout<<"                                ********************************"<<endl;
+  cout<<" enter the choice";
+     cin>>ch;
+       switch(ch)
+       {
+       case 1:
+        system("cls");
+      book(&second);
+      first_cust->LINK=second;
+     // check(second);
+        system("cls");
+        break;
+       case 2:
+        system("cls");
+                   display_buyrecord(second);
+                   getch();
+                   system("cls");
+                   break;
+       case 3:
+        system("cls");
+            rules();
+           casino(head);
+           break;
+        case 4:
+            system("cls");
+            details(head);
+            break;
+
+        case 5:
+            close();
+            break;
+
+       default:
+        cout<<"something went wrong :";
+       break;
+       }
+    }
+}
+void close()
+{
+    system("cls");
+            cout<<"Thank you for Visiting."<<endl;
+            cout<<" Visit again :)";
+}
+void registration(Node**first_cust)//node insert
+{
+    //preparing of new node
+     Node *temp=new Node();
+
+    cout<<"Enter the name"<<"\n";
+     fflush(stdin);
+        cin>>temp->name;
+        cout<<"enter your gender";
+         fflush(stdin);
+        cin>>temp->sex;
+        cout<<"Enter the address"<<"\n";
+         fflush(stdin);
+        cin>>temp->address;
+        cout<<"Enter the phone number"<<"\n";
+         fflush(stdin);
+        cin>>temp->ph_no;
+        temp->credits=100;
+        if(*first_cust==NULL)
+    {
+        *first_cust=temp;
+
+    }
+    else{
+    //put it in front of the new node
+     temp->next=*first_cust;
+    //move front piointer to this node
+     *first_cust=temp;
+}};
+void check(Node *head)
+{
+    int ch;
+    stack<int> sk;
+    if(head->item_name==1)
+    {
+            if(head->cpu==1)
+            {
+                cout<<head->cpu;
+                cout<<endl<<"1.i3 7th with touch and HDD";
+                cout<<endl<<"2.i3 10th with SSD";
+                cout<<endl<<"3.i5 8th gen with HDD";
+                cout<<endl<<"   searching for best........";
+                sk.push(1);
+                sk.push(2);
+                sk.push(3);
+                 int m = sk.top(); //initialization
+                 int a;
+                 while (!sk.empty())
+               {
+                  a = sk.top();
+                  if (m < a)
+                  m = a;
+                  sk.pop();
+                }
+                if(m>=3)
+                {
+                    head->max_range=40000;
+                    cout<<"pay now";
+                }
+
+            }
+            else
+            cout<<"there is shortage of amd-cpus try intel";
+    }
+     else
+             cout<<"sorry no phones";
+
+}
+
+void book(Node**second)
+{
+    //preparing of new node
+     Node *temp=new Node();
+
+    cout<<"Enter the item name eg:laptop press1 and mobile press 2"<<"\n";
+     fflush(stdin);
+        cin>>temp->item_name;
+        cout<<temp->item_name;
+        cout<<"processor you prefer intel or amd"<<"\n";
+        cout<<"Intel press 1:"<<"\n";
+        cout<<"Amd   press 2:"<<"\n";
+         fflush(stdin);
+        cin>>temp->cpu;
+
+        if(*second==NULL)
+    {
+        *second =temp;
+    }
+    else{
+    //put it in front of the new node
+     temp->prst=*second;
+    //move front piointer to this node
+     *second=temp;
+}
+};
+void display_buyrecord(Node *head)
+{
+    int i=1;
+    while(head->prst!=NULL)
+    {
+        cout<<endl<<"the name of "<<i++<<" product is:"<<" = "<<head->item_name<<"\n";
+        cout<<endl<<"the name of "<<i++<<" price paid is:"<<" = "<<head->max_range<<"\n";
+
+        head=head->prst;
+    }
+}
+void details(Node *head)
+{
+    int i=0;
+    Node *ptr =NULL;
+        cout<<"the name of customer is:"<<" = "<<head->name<<"\n";
+        cout<<"the gender of  customer is:"<<" = "<<head->sex<<"\n";
+        cout<<"the address of customer is:"<<" = "<<head->address<<"\n";
+        cout<<"the phone number of customer is:"<<" = "<<head->ph_no<<"\n";\
+        ptr=head->LINK;
+        while(ptr->prst!=NULL)
+        {
+            cout<<endl<<"the item name is :"<<ptr->item_name;
+            cout<<endl<<"the price paid is :"<<ptr->max_range;
+            ptr=ptr->prst;
+        }
+
+
+}
+
+/*
+Node *add_product(int n)
+{
+  Node *rtt=NULL;
+    Node *tmp=NULL;
+     Node*ptr;
+    for(int i=0;i<n;i++)
+    {
+        tmp=new Node();
+
+        cout<<"Enter the item name"<<"\n";
+        cin>>tmp->item_name;
+        cout<<"Enter the quantity"<<"\n";
+        cin>>tmp->quantity;
+        tmp->prst=NULL;
+            if(rtt==NULL)
+                rtt=tmp;
+            else
+            {
+                ptr=rtt;
+                while(ptr!=NULL)
+                ptr = ptr->prst;
+                ptr->prst=tmp;
+            }
+    }
+    return rtt;
+}*/
+void alr_cus(Node *head,int phone)
+{
+    int i=1;
+    int ch;
+    int flag;
+while(head->next!=NULL)
+{
+        if(head->ph_no==phone)
+     {
+             flag=0;
+             Node *second=new  Node();
+        cout<<"the name of customer "<<i<<" is:"<<" = "<<head->name<<"\n";
+        cout<<"the gender of customer "<<i<<" is:"<<" = "<<head->sex<<"\n";
+        cout<<"the address of customer "<<i<<" is:"<<" = "<<head->address<<"\n";
+        cout<<"the phone number of customer "<<i<<" is:"<<" = "<<head->ph_no<<"\n";
+        getch();
+        system("cls");
+
+        cust_log(head,second);
+   }
+    else {
+        flag++;
+    }
+      head=head->next;
+}
+    if(flag!=0)
+    {
+        cout<<"wrong details ";
+        //to register;
+    }
+}
+void display(Node *head)
+{
+    int i=1;
+    while(head->next!=NULL)
+    {
+        cout<<"the name of customer "<<i<<" is:"<<" = "<<head->name<<"\n";
+        cout<<"the gender of customer "<<i<<" is:"<<" = "<<head->sex<<"\n";
+        cout<<"the address of customer "<<i<<" is:"<<" = "<<head->address<<"\n";
+        cout<<"the phone number of customer "<<i<<" is:"<<" = "<<head->ph_no<<"\n";
+        head=head->next;
+        i++;
+    }
+}
+void main_menu()
+{
+    int choices;
+    int phno;
+    int n;
+    string m;
+    while (choices != 5)
+    {
+  cout<<"                                ********************************"<<endl;
+  cout<<"                                **********LOGIN||PANEL**********"<<endl;
+  cout<<"                                ********************************"<<endl;
+  cout<<"                                *  Press 1 For registration    *"<<endl;
+  cout<<"                                *  Press 2 already customer    *"<<endl;
+  cout<<"                                *  Press 3 For STAFF Login     *"<<endl;
+  cout<<"                                *  Press 4 To  Exit            *"<<endl;
+  cout<<"                                ********************************"<<endl;
+  cout<<"                                ********************************"<<endl;
+  cout<<"\n"<<endl;
+   cout<<" Enter Your Choice : ";
+  cin>>choices;
+  switch(choices)
+  {
+  case 1:
+    registration(&first_cust);
+    system("cls");
+      break;
+  case 2:
+      cout<<"Welcome"<<endl;
+      cout<<"Please enter your phone num:";
+      cin>>phno;
+      alr_cus(first_cust,phno);
+       getch();
+      break;
+case 3:
+       cout<<"enter the user name";
+       cin>>m;
+       cout<<"enter the pin";
+       cin>>n;
+       if(m=="r"&&n==1)
+        {
+       display(first_cust);
+      getch();
+       }
+        else
+        {
+            cout<<"something went wrong ";
+            system("cls");
+        }
+       break;
+   default:
+    cout<<"thanks:";
+     system("cls");
+    break;
+
+  }}
+}
+//FUNCTION OF CASINO RULES
+void rules()
+{
+    system("cls");
+    cout << "\n";
+    cout << "\t\tRULES OF THE GAME\n";
+    cout << "1. Choose any number between 1 to 10\n";
+    cout << "2. If you win you will get 10 times of money you bet\n";
+    cout << "3. If you bet on wrong number you will lose your betting amount\n";
+    cout << "...............................................................................";
+}
+
+//FUNCTION TO PLAY CASINO
+void casino(Node *head)
+{
+    time_t timer = time(NULL);
+    int amount;
+    int bettingAmount;
+    int guess;
+    int dice;
+    char choice;
+    system("cls");
+    cout << "\n\t\t\t*.*.*.*.*.*.*.*.*.*.*";
+    cout << "\n\t\t\t*  Casino Carnival  *";
+    cout << "\n\t\t\t*.*.*.*.*.*.*.*.*.*.*";
+    cout << "\n\n\t\t  Time: " << ctime(&timer);
+    cout << "\n\nEnter Total credits.";
+    cout<<head->credits;
+   amount=head->credits;
+
+    do
+    {
+        system("cls");
+        rules();
+        cout << "\n\nYour current balance is Rs." << amount << "\n";
+        do
+        {
+            cout << "\n How many credits you want to buy";
+            cin >> bettingAmount;
+            if (bettingAmount > amount)
+                cout << "\nYour betting credits is more than your current credits\n"
+                     << "Please Re-enter amount\n ";
+        } while (bettingAmount > amount);
+        do
+        {
+            cout << "\nGuess your number to bet between 1 to 10: ";
+            cin >> guess;
+            if (guess <= 0 || guess > 10)
+                cout << "Please check the number!! should be between 1 to 10\n"
+                     << "Re-enter data\n ";
+        } while (guess <= 0 || guess > 10);
+        dice = rand() % 10 + 1;
+        if (dice == guess)
+        {
+            cout<<"you have been short listed for upcoming give away";
+             amount = amount + bettingAmount * 10;
+             cout<<"your new credits are"<<amount<<"\n";
+             }
+        else
+        {
+            cout << "\nBad Luck this time !! You lost " << bettingAmount<<" credits" << "\n";
+            amount = amount - bettingAmount;
+        }
+        cout << "\nThe winning number was : " << dice << "\n";
+        cout << "\nYou have  " << amount << "\n";
+        if (amount == 0)
+        {
+            cout << "You have no credits to play ";
+            break;
+        }
+        cout << "\nDo you want to play again (y/n)? ";
+        cin >> choice;
+         head->credits=amount;
+    }
+
+while (choice == 'Y' || choice == 'y');
+    cout << "\nThanks for playing game. Your new credits are  " << amount;
+    system("cls");
+}
+
+int main()
+{
+    int ch;
+    cout << "\t\t\t+-------------------------------------------------------+";
+    cout << "\n\t\t\t|\tJaypee Institute of Information Technology\t|";
+    cout << "\n\t\t\t|\t\t\tNoida-128\t\t\t|";
+    cout << "\n\t\t\t|\t\t\t\t\t\t\t|";
+    cout << "\n\t\t\t|\t\tDS Project On Shopping Online\t\t|";
+    cout << "\n\t\t\t|\t\t\t\t\t\t\t|";
+    cout << "\n\t\t\t| ->Developed By:  Rishabh Sharaswat 9920103168 \t|\n";
+    cout << "\n\t\t\t| ->               Honey Baranwal  9920103169   \t|\n";
+    cout << "\n\t\t\t| ->               Kshiti Srivastav  9920103160 \t|\n";
+    cout << "\n\t\t\t| ->               Sushant Mittal  9920103176   \t|\n";
+    cout << "\t\t\t+-------------------------------------------------------+";
+ cout << "\n\n\n\t\t\t\t\tPress Any key to continue...!";
+    getch();
+    system("cls");
+    main_menu();
+}
+
